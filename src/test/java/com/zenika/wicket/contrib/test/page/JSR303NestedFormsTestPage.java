@@ -19,7 +19,7 @@ import com.zenika.wicket.contrib.test.bean.BeanObject;
  */
 public class JSR303NestedFormsTestPage extends WebPage {
 
-    private static final Logger LOG = LoggerFactory
+    private final Logger log = LoggerFactory
 	    .getLogger(JSR303NestedFormsTestPage.class);
 
     private Form<BeanObject> testForm;

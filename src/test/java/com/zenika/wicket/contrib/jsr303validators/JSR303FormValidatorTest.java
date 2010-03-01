@@ -26,7 +26,7 @@ import com.zenika.wicket.contrib.test.page.JSR303NestedFormsTestPage;
  */
 public class JSR303FormValidatorTest extends TestCase {
 
-    private static final Logger LOG = LoggerFactory
+    private final Logger log = LoggerFactory
 	    .getLogger(JSR303FormValidatorTest.class);
 
     private WicketTester tester;
@@ -85,7 +85,7 @@ public class JSR303FormValidatorTest extends TestCase {
 
 	FormTester formTester = tester.newFormTester("testForm");
 
-	LOG.debug("The model object on the tested form before validation = "
+	log.debug("The model object on the tested form before validation = "
 		+ formTester.getForm().getDefaultModelObjectAsString());
 
 	formTester.setValue("string", ""); // no validation
@@ -96,7 +96,7 @@ public class JSR303FormValidatorTest extends TestCase {
 	formTester.setValue("object.field", ""); // may not be null
 	formTester.submit();
 
-	LOG.debug("The model object on the tested form after validation = "
+	log.debug("The model object on the tested form after validation = "
 		+ formTester.getForm().getDefaultModelObjectAsString());
 
 	// TODO i18n : récupérer les messages à partir de la resource par défaut
@@ -119,7 +119,7 @@ public class JSR303FormValidatorTest extends TestCase {
 
 	FormTester formTester = tester.newFormTester("testForm");
 
-	LOG.debug("The model object on the tested form before validation = "
+	log.debug("The model object on the tested form before validation = "
 		+ formTester.getForm().getDefaultModelObjectAsString());
 
 	formTester.setValue("string", "");
@@ -130,7 +130,7 @@ public class JSR303FormValidatorTest extends TestCase {
 	formTester.setValue("object.field", "75015");
 	formTester.submit();
 
-	LOG.debug("The model object on the tested form after validation = "
+	log.debug("The model object on the tested form after validation = "
 		+ formTester.getForm().getDefaultModelObjectAsString());
 
 	tester.assertNoErrorMessage();
@@ -143,7 +143,7 @@ public class JSR303FormValidatorTest extends TestCase {
 
 	FormTester formTester = tester.newFormTester("testForm");
 
-	LOG.debug("The model object on the tested form before validation = "
+	log.debug("The model object on the tested form before validation = "
 		+ formTester.getForm().getDefaultModelObjectAsString());
 
 	FormTester innerFormTester = tester
@@ -159,7 +159,7 @@ public class JSR303FormValidatorTest extends TestCase {
 	formTester.setValue("datePast", "10/05/86"); // must be in the past
 	formTester.submit();
 
-	LOG.debug("The model object on the tested form after validation = "
+	log.debug("The model object on the tested form after validation = "
 		+ formTester.getForm().getDefaultModelObjectAsString());
 
 	tester.assertNoErrorMessage();

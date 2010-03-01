@@ -20,7 +20,7 @@ import com.zenika.wicket.contrib.test.page.BeanPropertyValidatorTestPage;
  */
 public class BeanPropertyValidatorTest extends TestCase {
 
-    private static final Logger LOG = LoggerFactory
+    private final Logger log = LoggerFactory
 	    .getLogger(BeanPropertyValidatorTest.class);
 
     private WicketTester tester;

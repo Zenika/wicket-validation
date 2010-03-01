@@ -1,5 +1,5 @@
 /* 
- * Copyright 2010 Zenika
+ * Copyright (c) 2010 Zenika
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,7 +110,7 @@ public class JSR303FormValidator implements IFormValidator,
 
     private static final long serialVersionUID = 1L;
 
-    private static final Logger LOG = LoggerFactory
+    private final Logger log = LoggerFactory
 	    .getLogger(JSR303FormValidator.class);
 
     private Class<?>[] groups;
@@ -158,7 +158,7 @@ public class JSR303FormValidator implements IFormValidator,
 	    throw new WicketRuntimeException(
 		    "The form model must be a valid CompoundPropertyModel");
 
-	LOG
+	log
 		.debug("The JSR303FormValidator is being added to the form with path : "
 			+ form.getPath());
 

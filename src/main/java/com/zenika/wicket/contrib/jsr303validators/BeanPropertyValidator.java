@@ -1,5 +1,5 @@
 /* 
- * Copyright 2010 Zenika
+ * Copyright (c) 2010 Zenika
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  */
 public class BeanPropertyValidator<T> implements INullAcceptingValidator<T> {
 
-    private static final Logger LOG = LoggerFactory
+    private final Logger log = LoggerFactory
 	    .getLogger(BeanPropertyValidator.class);
 
     private Class<?> beanClass;
@@ -95,7 +95,7 @@ public class BeanPropertyValidator<T> implements INullAcceptingValidator<T> {
 	    ConstraintViolation<?> violation = (ConstraintViolation<?>) v;
 	    validatable.error(new ValidationError().setMessage(propertyName
 		    + " " + violation.getMessage()));
-	    LOG.error("Violation = " + propertyName + " "
+	    log.error("Violation = " + propertyName + " "
 		    + violation.getMessage() + " - value was " + value);
 	}
 

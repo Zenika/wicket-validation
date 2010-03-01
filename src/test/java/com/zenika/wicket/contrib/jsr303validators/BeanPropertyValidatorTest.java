@@ -55,6 +55,7 @@ public class BeanPropertyValidatorTest extends TestCase {
 	formTester.setValue("dateFuture", "10/10/20");
 	formTester.setValue("datePast", "10/10/86");
 	formTester.setValue("object.field", "75015");
+	formTester.setValue("noValidation", "something");
 	formTester.submit();
 	tester.assertRenderedPage(BeanPropertyValidatorTestPage.class);
 	tester.assertNoErrorMessage();

@@ -20,8 +20,7 @@ public class BeanObject extends SuperBeanObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // public static final SimpleDateFormat sdf = new SimpleDateFormat(
-    // "yyyy-MM-dd");
+    private Object noValidation;
 
     @NotNull
     private String stringNotNull;

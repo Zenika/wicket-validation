@@ -13,29 +13,29 @@ import com.zenika.wicket.contrib.test.bean.BeanObject;
  */
 public class JSR303FormWithoutModelTestPage extends WebPage {
 
-    private BeanObject beanObject;
+	private BeanObject beanObject;
 
-    private Form<BeanObject> testForm;
+	private Form<BeanObject> testForm;
 
-    /**
+	/**
      * 
      */
-    public JSR303FormWithoutModelTestPage() {
+	public JSR303FormWithoutModelTestPage() {
 
-	beanObject = new BeanObject();
+		beanObject = new BeanObject();
 
-	addFormWithoutModel();
-    }
+		addFormWithoutModel();
+	}
 
-    /**
+	/**
      * 
      */
-    private void addFormWithoutModel() {
-	testForm = new Form<BeanObject>("testFormWithoutModel",
-		new Model<BeanObject>(beanObject));
-	testForm.add(new JSR303FormValidator());
-	add(testForm);
+	private void addFormWithoutModel() {
+		testForm = new Form<BeanObject>("testFormWithoutModel",
+				new Model<BeanObject>(beanObject));
+		testForm.add(new JSR303FormValidator());
+		add(testForm);
 
-    }
+	}
 
 }

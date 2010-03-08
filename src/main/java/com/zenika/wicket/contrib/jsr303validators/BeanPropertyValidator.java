@@ -42,62 +42,65 @@ import org.slf4j.LoggerFactory;
  */
 public class BeanPropertyValidator<T> implements INullAcceptingValidator<T> {
 
-    private final Logger log = LoggerFactory
-	    .getLogger(BeanPropertyValidator.class);
+	private final Logger log = LoggerFactory
+			.getLogger(BeanPropertyValidator.class);
 
-    private Class<?> beanClass;
+	private Class<?> beanClass;
 
-    private String propertyName;
+	private String propertyName;
 
-    private Class<?>[] groups;
+	private Class<?>[] groups;
 
-    /**
-     * Serialisation ID
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Serialisation ID
+	 */
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 
-     * @param beanClass
-     *            the class of the object we want to validate
-     * @param propertyName
-     *            the name of the object's property we want to validate
-     * @param groups
-     *            group or list of groups targeted for validation
-     */
-    public BeanPropertyValidator(final Class<?> beanClass, String propertyName,
-	    final Class<?>... groups) {
-	this.beanClass = beanClass;
-	this.propertyName = propertyName;
-	this.groups = groups;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Validates an annotated bean property, would its value be
-     * <code>validatable.getValue()</code>.
-     */
-    public void validate(IValidatable<T> validatable) {
-
-	T value = validatable.getValue();
-
-	// Building the Validator Factory
-	final Validator validator = Validation.buildDefaultValidatorFactory()
-		.getValidator();
-
-	// We validate the property against the value
-	Set<?> violations = validator.validateValue(beanClass, propertyName,
-		value, groups);
-
-	// For each violations we set the component state to ERROR
-	for (Object v : violations) {
-	    ConstraintViolation<?> violation = (ConstraintViolation<?>) v;
-	    validatable.error(new ValidationError().setMessage(propertyName
-		    + " " + violation.getMessage()));
-	    log.error("Violation = " + propertyName + " "
-		    + violation.getMessage() + " - value was " + value);
+	/**
+	 * Constructs a BeanPropertyValidator.
+	 * 
+	 * @param beanClass
+	 *            the class of the object we want to validate
+	 * @param propertyName
+	 *            the name of the object's property we want to validate
+	 * @param groups
+	 *            group or list of groups targeted for validation
+	 */
+	public BeanPropertyValidator(final Class<?> beanClass, String propertyName,
+			final Class<?>... groups) {
+		this.beanClass = beanClass;
+		this.propertyName = propertyName;
+		this.groups = groups;
 	}
 
-    }
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * Validates an annotated bean field, would its value be
+	 * <code>validatable.getValue()</code>.
+	 * 
+	 * @see javax.validation.Validator#validateValue(Class, String, Object,
+	 *      Class...)
+	 * 
+	 */
+	public void validate(IValidatable<T> validatable) {
+
+		T value = validatable.getValue();
+
+		final Validator validator = Validation.buildDefaultValidatorFactory()
+				.getValidator();
+
+		Set<?> violations = validator.validateValue(beanClass, propertyName,
+				value, groups);
+
+		// For each violations we set the component state to ERROR
+		for (Object v : violations) {
+			ConstraintViolation<?> violation = (ConstraintViolation<?>) v;
+			validatable.error(new ValidationError().setMessage(propertyName
+					+ " " + violation.getMessage()));
+			log.error("Violation = " + propertyName + " "
+					+ violation.getMessage() + " - value was " + value);
+		}
+
+	}
 }

@@ -28,9 +28,9 @@ import javax.validation.constraints.Size;
 @Size(min = 5, max = 5, message = "Zipcode should be of size {max}")
 public @interface FrenchZipCode {
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-    String message() default "is not a valid french zipcode";
+	String message() default "is not a valid french zipcode";
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 }

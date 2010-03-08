@@ -17,33 +17,33 @@ import com.zenika.wicket.contrib.test.bean.ValidationGroup;
  */
 public class JSR303GroupValidationTestPage extends WebPage {
 
-    private Form<BeanObject> testForm;
-    private BeanObject beanObject;
+	private Form<BeanObject> testForm;
+	private BeanObject beanObject;
 
-    /**
+	/**
      * 
      */
-    public JSR303GroupValidationTestPage() {
-	beanObject = new BeanObject();
-	addForm();
-    }
+	public JSR303GroupValidationTestPage() {
+		beanObject = new BeanObject();
+		addForm();
+	}
 
-    /**
+	/**
      * 
      */
-    private void addForm() {
-	testForm = new Form<BeanObject>("testForm",
-		new CompoundPropertyModel<BeanObject>(beanObject));
+	private void addForm() {
+		testForm = new Form<BeanObject>("testForm",
+				new CompoundPropertyModel<BeanObject>(beanObject));
 
-	testForm.add(new TextField<String>("string"));
-	testForm.add(new TextField<String>("stringNotNull"));
-	testForm.add(new TextField<Date>("dateNotNull"));
-	testForm.add(new TextField<Date>("datePast"));
-	testForm.add(new TextField<Date>("dateFuture"));
-	testForm.add(new TextField<String>("object.field"));
+		testForm.add(new TextField<String>("string"));
+		testForm.add(new TextField<String>("stringNotNull"));
+		testForm.add(new TextField<Date>("dateNotNull"));
+		testForm.add(new TextField<Date>("datePast"));
+		testForm.add(new TextField<Date>("dateFuture"));
+		testForm.add(new TextField<String>("object.field"));
 
-	testForm.add(new JSR303FormValidator(ValidationGroup.class));
+		testForm.add(new JSR303FormValidator(ValidationGroup.class));
 
-	add(testForm);
-    }
+		add(testForm);
+	}
 }

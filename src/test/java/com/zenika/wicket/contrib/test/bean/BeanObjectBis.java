@@ -8,36 +8,36 @@ import javax.validation.constraints.NotNull;
  */
 public class BeanObjectBis extends SuperBeanObject {
 
-    @NotNull
-    private String field;
+	@NotNull
+	private String field;
 
-    /**
+	/**
      * 
      */
-    public BeanObjectBis() {
-    }
+	public BeanObjectBis() {
+	}
 
-    /**
-     * @return field
-     */
-    public String getField() {
-	return field;
-    }
+	/**
+	 * @return field
+	 */
+	public String getField() {
+		return field;
+	}
 
-    /**
-     * @param field
-     *            , field
-     */
-    public void setField(String field) {
-	this.field = field;
-    }
+	/**
+	 * @param field
+	 *            , field
+	 */
+	public void setField(String field) {
+		this.field = field;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-	return "BeanObjectBis [field=" + field + "]";
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return "BeanObjectBis [field=" + field + "]";
+	}
 
 }

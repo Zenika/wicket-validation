@@ -30,39 +30,39 @@ import com.zenika.wicket.contrib.test.bean.BeanObject;
  */
 public class ValidationListenerTestPage extends WebPage {
 
-    private BeanObject beanObject;
+	private BeanObject beanObject;
 
-    private Form<BeanObject> testForm;
+	private Form<BeanObject> testForm;
 
-    /**
+	/**
      * 
      */
-    public ValidationListenerTestPage() {
-	beanObject = new BeanObject();
+	public ValidationListenerTestPage() {
+		beanObject = new BeanObject();
 
-	addFormWithModel();
-    }
+		addFormWithModel();
+	}
 
-    public void addFormWithModel() {
-	testForm = new Form<BeanObject>("testForm",
-		new CompoundPropertyModel<BeanObject>(beanObject));
+	public void addFormWithModel() {
+		testForm = new Form<BeanObject>("testForm",
+				new CompoundPropertyModel<BeanObject>(beanObject));
 
-	TextField<String> stringField = new TextField<String>("string");
+		TextField<String> stringField = new TextField<String>("string");
 
-	TextField<String> stringNotNullField = new TextField<String>(
-		"stringNotNull");
-	TextField<Date> dateField = new TextField<Date>("dateNotNull");
-	TextField<Date> datePastField = new TextField<Date>("datePast");
-	TextField<Date> dateFutureField = new TextField<Date>("dateFuture");
-	TextField<String> objField = new TextField<String>("object.field");
+		TextField<String> stringNotNullField = new TextField<String>(
+				"stringNotNull");
+		TextField<Date> dateField = new TextField<Date>("dateNotNull");
+		TextField<Date> datePastField = new TextField<Date>("datePast");
+		TextField<Date> dateFutureField = new TextField<Date>("dateFuture");
+		TextField<String> objField = new TextField<String>("object.field");
 
-	testForm.add(datePastField);
-	testForm.add(dateFutureField);
-	testForm.add(stringField);
-	testForm.add(stringNotNullField);
-	testForm.add(dateField);
-	testForm.add(objField);
-	add(testForm);
+		testForm.add(datePastField);
+		testForm.add(dateFutureField);
+		testForm.add(stringField);
+		testForm.add(stringNotNullField);
+		testForm.add(dateField);
+		testForm.add(objField);
+		add(testForm);
 
-    }
+	}
 }

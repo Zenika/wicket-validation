@@ -19,48 +19,48 @@ import com.zenika.wicket.contrib.test.bean.BeanObject;
  */
 public class JSR303NestedFormsTestPage extends WebPage {
 
-    private final Logger log = LoggerFactory
-	    .getLogger(JSR303NestedFormsTestPage.class);
+	private final Logger log = LoggerFactory
+			.getLogger(JSR303NestedFormsTestPage.class);
 
-    private Form<BeanObject> testForm;
+	private Form<BeanObject> testForm;
 
-    private Form<AssociatedBeanObject> nestedForm;
+	private Form<AssociatedBeanObject> nestedForm;
 
-    private BeanObject beanObject;
+	private BeanObject beanObject;
 
-    private AssociatedBeanObject assocbeanObject;
+	private AssociatedBeanObject assocbeanObject;
 
-    /**
+	/**
      * 
      */
-    public JSR303NestedFormsTestPage() {
-	beanObject = new BeanObject();
-	assocbeanObject = new AssociatedBeanObject();
-	beanObject.setObject(assocbeanObject);
-	addForm();
-    }
+	public JSR303NestedFormsTestPage() {
+		beanObject = new BeanObject();
+		assocbeanObject = new AssociatedBeanObject();
+		beanObject.setObject(assocbeanObject);
+		addForm();
+	}
 
-    /**
+	/**
      * 
      */
-    private void addForm() {
-	testForm = new Form<BeanObject>("testForm",
-		new CompoundPropertyModel<BeanObject>(beanObject));
+	private void addForm() {
+		testForm = new Form<BeanObject>("testForm",
+				new CompoundPropertyModel<BeanObject>(beanObject));
 
-	nestedForm = new Form<AssociatedBeanObject>("nestedForm",
-		new CompoundPropertyModel<AssociatedBeanObject>(beanObject
-			.getObject()));
+		nestedForm = new Form<AssociatedBeanObject>("nestedForm",
+				new CompoundPropertyModel<AssociatedBeanObject>(beanObject
+						.getObject()));
 
-	testForm.add(nestedForm);
-	testForm.add(new TextField<String>("string"));
-	testForm.add(new TextField<String>("stringNotNull"));
-	testForm.add(new TextField<Date>("dateNotNull"));
-	testForm.add(new TextField<Date>("datePast"));
-	testForm.add(new TextField<Date>("dateFuture"));
-	nestedForm.add(new TextField<String>("field"));
-	testForm.add(new JSR303FormValidator());
+		testForm.add(nestedForm);
+		testForm.add(new TextField<String>("string"));
+		testForm.add(new TextField<String>("stringNotNull"));
+		testForm.add(new TextField<Date>("dateNotNull"));
+		testForm.add(new TextField<Date>("datePast"));
+		testForm.add(new TextField<Date>("dateFuture"));
+		nestedForm.add(new TextField<String>("field"));
+		testForm.add(new JSR303FormValidator());
 
-	add(testForm);
-    }
+		add(testForm);
+	}
 
 }

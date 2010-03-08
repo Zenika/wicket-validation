@@ -8,20 +8,20 @@ import javax.validation.ConstraintValidatorContext;
  * 
  */
 public class FrenchZipCodeValidator implements
-	ConstraintValidator<FrenchZipCode, String> {
+		ConstraintValidator<FrenchZipCode, String> {
 
-    /**
-     * {@inheritDoc}
-     */
-    public void initialize(FrenchZipCode constraintAnnotation) {
-	// empty
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void initialize(FrenchZipCode constraintAnnotation) {
+		// empty
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-	return true;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isValid(String value, ConstraintValidatorContext context) {
+		return true;
+	}
 
 }

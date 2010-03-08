@@ -26,142 +26,143 @@ import com.zenika.wicket.contrib.test.page.JSR303NestedFormsTestPage;
  */
 public class JSR303FormValidatorTest extends TestCase {
 
-    private final Logger log = LoggerFactory
-	    .getLogger(JSR303FormValidatorTest.class);
+	private final Logger log = LoggerFactory
+			.getLogger(JSR303FormValidatorTest.class);
 
-    private WicketTester tester;
+	private WicketTester tester;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void setUp() throws Exception {
-	Locale.setDefault(Locale.ENGLISH);
-	tester = new WicketTester();
-	super.setUp();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void tearDown() throws Exception {
-	tester.destroy();
-	super.tearDown();
-    }
-
-    @Test
-    public void testGroupValidation() {
-	tester.startPage(JSR303GroupValidationTestPage.class);
-	tester.assertRenderedPage(JSR303GroupValidationTestPage.class);
-
-	FormTester formTester = tester.newFormTester("testForm");
-	formTester.setValue("string", "");
-	formTester.submit();
-
-	tester.assertErrorMessages(new String[] { "string may not be null" });
-
-    }
-
-    /**
-     * If the form doesn't provide a model, a WicketRuntimeException must be
-     * thrown.
-     */
-    @Test
-    public void testValidationFieldsWithoutModel() {
-	try {
-	    tester.startPage(JSR303FormWithoutModelTestPage.class);
-	    fail("A Wicket Runtime Exception must be caught !");
-	} catch (WicketRuntimeException e) {
-	    assertEquals(WicketRuntimeException.class, e.getClass());
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void setUp() throws Exception {
+		Locale.setDefault(Locale.ENGLISH);
+		tester = new WicketTester();
+		super.setUp();
 	}
-    }
 
-    @Test
-    public void testValidationWithBadValues() {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void tearDown() throws Exception {
+		tester.destroy();
+		super.tearDown();
+	}
 
-	tester.startPage(JSR303FormValidatorTestPage.class);
-	tester.assertRenderedPage(JSR303FormValidatorTestPage.class);
+	@Test
+	public void testGroupValidation() {
+		tester.startPage(JSR303GroupValidationTestPage.class);
+		tester.assertRenderedPage(JSR303GroupValidationTestPage.class);
 
-	FormTester formTester = tester.newFormTester("testForm");
+		FormTester formTester = tester.newFormTester("testForm");
+		formTester.setValue("string", "");
+		formTester.submit();
 
-	log.debug("The model object on the tested form before validation = "
-		+ formTester.getForm().getDefaultModelObjectAsString());
+		tester.assertErrorMessages(new String[] { "string may not be null" });
 
-	formTester.setValue("string", ""); // no validation
-	formTester.setValue("stringNotNull", "");// may not be null
-	formTester.setValue("dateNotNull", ""); // may not be null
-	formTester.setValue("dateFuture", "10/10/87"); // must be in the future
-	formTester.setValue("datePast", "10/5/2015"); // must be in the past
-	formTester.setValue("object.field", ""); // may not be null
-	formTester.submit();
+	}
 
-	log.debug("The model object on the tested form after validation = "
-		+ formTester.getForm().getDefaultModelObjectAsString());
+	/**
+	 * If the form doesn't provide a model, a WicketRuntimeException must be
+	 * thrown.
+	 */
+	@Test
+	public void testValidationFieldsWithoutModel() {
+		try {
+			tester.startPage(JSR303FormWithoutModelTestPage.class);
+			fail("A Wicket Runtime Exception must be caught !");
+		} catch (WicketRuntimeException e) {
+			assertEquals(WicketRuntimeException.class, e.getClass());
+		}
+	}
 
-	// TODO i18n : récupérer les messages à partir de la resource par défaut
-	tester.assertErrorMessages(new String[] {
-		"datePast must be in the past",
-		"dateFuture must be in the future",
-		"dateNotNull may not be null", "stringNotNull may not be null",
-		"object.field may not be null" });
+	@Test
+	public void testValidationWithBadValues() {
 
-	// The resulting model object shouldn't have changed
-	BeanObject beanObject = new BeanObject();
-	assertEquals(beanObject, formTester.getForm().getDefaultModelObject());
+		tester.startPage(JSR303FormValidatorTestPage.class);
+		tester.assertRenderedPage(JSR303FormValidatorTestPage.class);
 
-    }
+		FormTester formTester = tester.newFormTester("testForm");
 
-    @Test
-    public void testValidationWithGoodValues() {
-	tester.startPage(JSR303FormValidatorTestPage.class);
-	tester.assertRenderedPage(JSR303FormValidatorTestPage.class);
+		log.debug("The model object on the tested form before validation = "
+				+ formTester.getForm().getDefaultModelObjectAsString());
 
-	FormTester formTester = tester.newFormTester("testForm");
+		formTester.setValue("string", ""); // no validation
+		formTester.setValue("stringNotNull", "");// may not be null
+		formTester.setValue("dateNotNull", ""); // may not be null
+		formTester.setValue("dateFuture", "10/10/87"); // must be in the future
+		formTester.setValue("datePast", "10/5/2015"); // must be in the past
+		formTester.setValue("object.field", "788888");
+		formTester.submit();
 
-	log.debug("The model object on the tested form before validation = "
-		+ formTester.getForm().getDefaultModelObjectAsString());
+		log.debug("The model object on the tested form after validation = "
+				+ formTester.getForm().getDefaultModelObjectAsString());
 
-	formTester.setValue("string", "");
-	formTester.setValue("stringNotNull", "string is not null");
-	formTester.setValue("dateNotNull", "23/06/10");
-	formTester.setValue("dateFuture", "10/10/12");
-	formTester.setValue("datePast", "10/05/86");
-	formTester.setValue("object.field", "75015");
-	formTester.submit();
+		// TODO i18n : récupérer les messages à partir de la resource par défaut
+		tester.assertErrorMessages(new String[] {
+				"datePast must be in the past",
+				"dateFuture must be in the future",
+				"dateNotNull may not be null", "stringNotNull may not be null",
+				"object.field Zipcode should be of size 5" });
 
-	log.debug("The model object on the tested form after validation = "
-		+ formTester.getForm().getDefaultModelObjectAsString());
+		// The resulting model object shouldn't have changed
+		BeanObject beanObject = new BeanObject();
+		assertEquals(beanObject, formTester.getForm().getDefaultModelObject());
 
-	tester.assertNoErrorMessage();
-    }
+	}
 
-    @Test
-    public void testValidationWithNestedForms() {
-	tester.startPage(JSR303NestedFormsTestPage.class);
-	tester.assertRenderedPage(JSR303NestedFormsTestPage.class);
+	@Test
+	public void testValidationWithGoodValues() {
+		tester.startPage(JSR303FormValidatorTestPage.class);
+		tester.assertRenderedPage(JSR303FormValidatorTestPage.class);
 
-	FormTester formTester = tester.newFormTester("testForm");
+		FormTester formTester = tester.newFormTester("testForm");
 
-	log.debug("The model object on the tested form before validation = "
-		+ formTester.getForm().getDefaultModelObjectAsString());
+		log.debug("The model object on the tested form before validation = "
+				+ formTester.getForm().getDefaultModelObjectAsString());
 
-	FormTester innerFormTester = tester
-		.newFormTester("testForm:nestedForm");
+		formTester.setValue("string", "");
+		formTester.setValue("stringNotNull", "string is not null");
+		formTester.setValue("dateNotNull", "23/06/10");
+		formTester.setValue("dateFuture", "10/10/12");
+		formTester.setValue("datePast", "10/05/86");
+		formTester.setValue("object.field", "75015");
+		formTester.submit();
 
-	innerFormTester.setValue("field", "75015"); // may not be
-	// null
+		log.debug("The model object on the tested form after validation = "
+				+ formTester.getForm().getDefaultModelObjectAsString());
 
-	formTester.setValue("string", ""); // no validation
-	formTester.setValue("stringNotNull", "string is not null");
-	formTester.setValue("dateNotNull", "23/06/10"); // may not be null
-	formTester.setValue("dateFuture", "10/10/12"); // must be in the future
-	formTester.setValue("datePast", "10/05/86"); // must be in the past
-	formTester.submit();
+		tester.assertNoErrorMessage();
+	}
 
-	log.debug("The model object on the tested form after validation = "
-		+ formTester.getForm().getDefaultModelObjectAsString());
+	@Test
+	public void testValidationWithNestedForms() {
+		tester.startPage(JSR303NestedFormsTestPage.class);
+		tester.assertRenderedPage(JSR303NestedFormsTestPage.class);
 
-	tester.assertNoErrorMessage();
-    }
+		FormTester formTester = tester.newFormTester("testForm");
+
+		log.debug("The model object on the tested form before validation = "
+				+ formTester.getForm().getDefaultModelObjectAsString());
+
+		FormTester innerFormTester = tester
+				.newFormTester("testForm:nestedForm");
+
+		innerFormTester.setValue("field", "sdifu"); // may not be
+		// null
+
+		formTester.setValue("string", ""); // no validation
+		formTester.setValue("stringNotNull", "string is not null");
+		formTester.setValue("dateNotNull", "23/06/10"); // may not be null
+		formTester.setValue("dateFuture", "10/10/12"); // must be in the future
+		formTester.setValue("datePast", "10/05/86"); // must be in the past
+		formTester.submit();
+
+		log.debug("The model object on the tested form after validation = "
+				+ formTester.getForm().getDefaultModelObjectAsString());
+
+		tester
+				.assertErrorMessages(new String[] { "field must match \"[0-9]*\"" });
+	}
 }

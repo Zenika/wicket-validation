@@ -16,53 +16,53 @@ import com.zenika.wicket.contrib.test.bean.BeanObject;
  */
 public class JSR303FormValidatorTestPage extends WebPage {
 
-    private BeanObject beanObject;
+	private BeanObject beanObject;
 
-    private Form<BeanObject> testForm;
+	private Form<BeanObject> testForm;
 
-    public JSR303FormValidatorTestPage() {
+	public JSR303FormValidatorTestPage() {
 
-	beanObject = new BeanObject();
+		beanObject = new BeanObject();
 
-	addFormWithModel();
-    }
+		addFormWithModel();
+	}
 
-    public void addFormWithModel() {
-	testForm = new Form<BeanObject>("testForm",
-		new CompoundPropertyModel<BeanObject>(beanObject));
+	public void addFormWithModel() {
+		testForm = new Form<BeanObject>("testForm",
+				new CompoundPropertyModel<BeanObject>(beanObject));
 
-	TextField<String> stringField = new TextField<String>("string");
+		TextField<String> stringField = new TextField<String>("string");
 
-	TextField<String> stringNotNullField = new TextField<String>(
-		"stringNotNull");
-	TextField<Date> dateField = new TextField<Date>("dateNotNull");
-	TextField<Date> datePastField = new TextField<Date>("datePast");
-	TextField<Date> dateFutureField = new TextField<Date>("dateFuture");
-	TextField<String> objField = new TextField<String>("object.field");
+		TextField<String> stringNotNullField = new TextField<String>(
+				"stringNotNull");
+		TextField<Date> dateField = new TextField<Date>("dateNotNull");
+		TextField<Date> datePastField = new TextField<Date>("datePast");
+		TextField<Date> dateFutureField = new TextField<Date>("dateFuture");
+		TextField<String> objField = new TextField<String>("object.field");
 
-	testForm.add(datePastField);
-	testForm.add(dateFutureField);
-	testForm.add(stringField);
-	testForm.add(stringNotNullField);
-	testForm.add(dateField);
-	testForm.add(objField);
-	testForm.add(new JSR303FormValidator());
-	add(testForm);
+		testForm.add(datePastField);
+		testForm.add(dateFutureField);
+		testForm.add(stringField);
+		testForm.add(stringNotNullField);
+		testForm.add(dateField);
+		testForm.add(objField);
+		testForm.add(new JSR303FormValidator());
+		add(testForm);
 
-    }
+	}
 
-    /**
-     * @return beanObject
-     */
-    public BeanObject getBeanObject() {
-	return beanObject;
-    }
+	/**
+	 * @return beanObject
+	 */
+	public BeanObject getBeanObject() {
+		return beanObject;
+	}
 
-    /**
-     * @param beanObject
-     *            , beanObject
-     */
-    public void setBeanObject(BeanObject beanObject) {
-	this.beanObject = beanObject;
-    }
+	/**
+	 * @param beanObject
+	 *            , beanObject
+	 */
+	public void setBeanObject(BeanObject beanObject) {
+		this.beanObject = beanObject;
+	}
 }

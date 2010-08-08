@@ -16,8 +16,6 @@
 
 package com.zenika.wicket.contrib.jsr303validators;
 
-import javax.validation.Constraint;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.application.IComponentOnBeforeRenderListener;
 import org.apache.wicket.markup.html.form.AbstractTextComponent;
@@ -43,37 +41,37 @@ import org.apache.wicket.model.AbstractPropertyModel;
  * 
  */
 public class JSR303ValidationListener implements
-		IComponentOnBeforeRenderListener {
+	IComponentOnBeforeRenderListener {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void onBeforeRender(Component component) {
-		if ((component instanceof AbstractTextComponent<?>)
-				&& !component.hasBeenRendered()) {
-			processComponent((AbstractTextComponent<?>) component);
-		}
+    /**
+     * {@inheritDoc}
+     */
+    public void onBeforeRender(Component component) {
+	if ((component instanceof AbstractTextComponent<?>)
+		&& !component.hasBeenRendered()) {
+	    processComponent((AbstractTextComponent<?>) component);
+	}
+    }
+
+    /**
+     * @param component
+     */
+    @SuppressWarnings("unchecked")
+    private void processComponent(AbstractTextComponent<?> component) {
+
+	if (component.getModel() instanceof AbstractPropertyModel<?>) {
+	    AbstractPropertyModel<?> model = (AbstractPropertyModel<?>) component
+		    .getModel();
+
+	    if ((model.getChainedModel() != null)
+		    && (model.getChainedModel().getObject() != null)) {
+		Class<?> modelObjectClass = model.getChainedModel().getObject()
+			.getClass();
+
+		component.add(new BeanPropertyValidator(modelObjectClass, model
+			.getPropertyExpression()));
+	    }
 	}
 
-	/**
-	 * @param component
-	 */
-	@SuppressWarnings("unchecked")
-	private void processComponent(AbstractTextComponent<?> component) {
-
-		if (component.getModel() instanceof AbstractPropertyModel<?>) {
-			AbstractPropertyModel<?> model = (AbstractPropertyModel<?>) component
-					.getModel();
-
-			if ((model.getChainedModel() != null)
-					&& (model.getChainedModel().getObject() != null)) {
-				Class<?> modelObjectClass = model.getChainedModel().getObject()
-						.getClass();
-
-				component.add(new BeanPropertyValidator(modelObjectClass, model
-						.getPropertyExpression()));
-			}
-		}
-
-	}
+    }
 }

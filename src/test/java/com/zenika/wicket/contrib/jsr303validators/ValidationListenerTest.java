@@ -35,100 +35,99 @@ import com.zenika.wicket.contrib.test.page.ValidationListenerTestPage;
  */
 public class ValidationListenerTest extends TestCase {
 
-	private WicketTester tester;
+    private WicketTester tester;
 
-	private final Logger log = LoggerFactory
-			.getLogger(ValidationListenerTest.class);
+    private final transient Logger log = LoggerFactory
+	    .getLogger(ValidationListenerTest.class);
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void setUp() throws Exception {
-		Locale.setDefault(Locale.ENGLISH);
-		tester = new WicketTester();
-		tester.getApplication().addPostComponentOnBeforeRenderListener(
-				new JSR303ValidationListener());
-		super.setUp();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void setUp() throws Exception {
+	Locale.setDefault(Locale.ENGLISH);
+	tester = new WicketTester();
+	tester.getApplication().addPostComponentOnBeforeRenderListener(
+		new JSR303ValidationListener());
+	super.setUp();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void tearDown() throws Exception {
-		tester.destroy();
-		super.tearDown();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void tearDown() throws Exception {
+	tester.destroy();
+	super.tearDown();
+    }
 
-	/**
-	 * Nothing should happen
-	 */
-	@Test
-	public void testValidationOnFormWithoutModel() {
-		tester.startPage(ValidationListenerFormWithoutModelTestPage.class);
-		tester
-				.assertRenderedPage(ValidationListenerFormWithoutModelTestPage.class);
+    /**
+     * Nothing should happen
+     */
+    @Test
+    public void testValidationOnFormWithoutModel() {
+	tester.startPage(ValidationListenerFormWithoutModelTestPage.class);
+	tester.assertRenderedPage(ValidationListenerFormWithoutModelTestPage.class);
 
-		FormTester formTester = tester.newFormTester("testFormWithoutModel");
-		formTester.submit();
+	FormTester formTester = tester.newFormTester("testFormWithoutModel");
+	formTester.submit();
 
-		tester.assertNoErrorMessage();
+	tester.assertNoErrorMessage();
 
-	}
+    }
 
-	@Test
-	public void testValidationWithBadValues() {
-		tester.startPage(ValidationListenerTestPage.class);
-		tester.assertRenderedPage(ValidationListenerTestPage.class);
-		FormTester formTester = tester.newFormTester("testForm");
+    @Test
+    public void testValidationWithBadValues() {
+	tester.startPage(ValidationListenerTestPage.class);
+	tester.assertRenderedPage(ValidationListenerTestPage.class);
+	FormTester formTester = tester.newFormTester("testForm");
 
-		log.debug("The model object on the tested form before validation = "
-				+ formTester.getForm().getDefaultModelObjectAsString());
+	log.debug("The model object on the tested form before validation = "
+		+ formTester.getForm().getDefaultModelObjectAsString());
 
-		formTester.setValue("string", ""); // no validation
-		formTester.setValue("stringNotNull", "");// may not be null
-		formTester.setValue("dateNotNull", ""); // may not be null
-		formTester.setValue("dateFuture", "10/10/87"); // must be in the future
-		formTester.setValue("datePast", "10/5/2015"); // must be in the past
-		formTester.setValue("object.field", ""); // may not be null
-		formTester.submit();
+	formTester.setValue("string", ""); // no validation
+	formTester.setValue("stringNotNull", "");// may not be null
+	formTester.setValue("dateNotNull", ""); // may not be null
+	formTester.setValue("dateFuture", "10/10/87"); // must be in the future
+	formTester.setValue("datePast", "10/5/2015"); // must be in the past
+	formTester.setValue("object.field", ""); // may not be null
+	formTester.submit();
 
-		log.debug("The model object on the tested form after validation = "
-				+ formTester.getForm().getDefaultModelObjectAsString());
+	log.debug("The model object on the tested form after validation = "
+		+ formTester.getForm().getDefaultModelObjectAsString());
 
-		tester.assertErrorMessages(new String[] {
-				"datePast must be in the past",
-				"dateFuture must be in the future",
-				"dateNotNull may not be null", "stringNotNull may not be null",
-				"object.field may not be null" });
+	tester.assertErrorMessages(new String[] {
+		"datePast must be in the past",
+		"dateFuture must be in the future",
+		"dateNotNull may not be null", "stringNotNull may not be null",
+		"object.field may not be null" });
 
-		// The resulting model object shouldn't have changed
-		BeanObject beanObject = new BeanObject();
-		assertEquals(beanObject, formTester.getForm().getDefaultModelObject());
-	}
+	// The resulting model object shouldn't have changed
+	BeanObject beanObject = new BeanObject();
+	assertEquals(beanObject, formTester.getForm().getDefaultModelObject());
+    }
 
-	@Test
-	public void testValidationWithGoodValues() {
-		tester.startPage(ValidationListenerTestPage.class);
-		tester.assertRenderedPage(ValidationListenerTestPage.class);
+    @Test
+    public void testValidationWithGoodValues() {
+	tester.startPage(ValidationListenerTestPage.class);
+	tester.assertRenderedPage(ValidationListenerTestPage.class);
 
-		FormTester formTester = tester.newFormTester("testForm");
+	FormTester formTester = tester.newFormTester("testForm");
 
-		log.debug("The model object on the tested form before validation = "
-				+ formTester.getForm().getDefaultModelObjectAsString());
+	log.debug("The model object on the tested form before validation = "
+		+ formTester.getForm().getDefaultModelObjectAsString());
 
-		formTester.setValue("string", "");
-		formTester.setValue("stringNotNull", "string is not null");
-		formTester.setValue("dateNotNull", "23/06/10");
-		formTester.setValue("dateFuture", "10/10/12");
-		formTester.setValue("datePast", "10/05/86");
-		formTester.setValue("object.field", "75015");
-		formTester.submit();
+	formTester.setValue("string", "");
+	formTester.setValue("stringNotNull", "string is not null");
+	formTester.setValue("dateNotNull", "23/06/10");
+	formTester.setValue("dateFuture", "10/10/12");
+	formTester.setValue("datePast", "10/05/86");
+	formTester.setValue("object.field", "75015");
+	formTester.submit();
 
-		log.debug("The model object on the tested form after validation = "
-				+ formTester.getForm().getDefaultModelObjectAsString());
+	log.debug("The model object on the tested form after validation = "
+		+ formTester.getForm().getDefaultModelObjectAsString());
 
-		tester.assertNoErrorMessage();
-	}
+	tester.assertNoErrorMessage();
+    }
 }

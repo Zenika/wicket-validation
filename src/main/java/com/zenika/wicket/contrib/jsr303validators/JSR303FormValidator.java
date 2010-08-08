@@ -23,8 +23,8 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.form.AbstractTextComponent;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
 import org.apache.wicket.markup.html.form.FormComponent.IVisitor;
+import org.apache.wicket.markup.html.form.IFormVisitorParticipant;
 import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.model.AbstractPropertyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -51,7 +51,7 @@ import org.slf4j.LoggerFactory;
  * 
  * <pre>
  * Form&lt;BeanObject&gt; form = new Form&lt;BeanObject&gt;(&quot;form&quot;, new CompoundPropertyModel(
- * 		new BeanObject()));
+ * 	new BeanObject()));
  * form.add(new JSR303FormValidator());
  * </pre>
  * 
@@ -59,119 +59,118 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class JSR303FormValidator implements IFormValidator,
-		IValidatorAddListener {
+	IValidatorAddListener {
 
-	/**
-	 * Performs a visit to the form components and adds a BeanPropertyValidator
-	 * to all of them.
-	 * 
-	 * @author ophelie salm (zenika)
-	 * 
-	 */
-	private class JSR303ValidatorFormComponentVisitor implements IVisitor {
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@SuppressWarnings("unchecked")
-		public Object formComponent(IFormVisitorParticipant formComponent) {
-
-			if (formComponent instanceof AbstractTextComponent<?>) {
-
-				AbstractTextComponent<?> component = (AbstractTextComponent<?>) formComponent;
-
-				AbstractPropertyModel<?> model = (AbstractPropertyModel<?>) component
-						.getModel();
-
-				// We add a BeanPropertyValidator only if the model owns a
-				// chained
-				// model with a model object != null
-				if (model.getChainedModel() != null
-						&& model.getChainedModel().getObject() != null) {
-
-					Class<?> modelObjectClass = model.getChainedModel()
-							.getObject().getClass();
-
-					component.add(new BeanPropertyValidator(modelObjectClass,
-							model.getPropertyExpression(), groups));
-
-					// This formComponent is added to the dependent form
-					// components
-					// list
-					formComponents.add(component);
-				}
-			}
-			return null;
-		}
-
-	}
-
-	private Form<?> form;
-
-	private static final long serialVersionUID = 1L;
-
-	private final Logger log = LoggerFactory
-			.getLogger(JSR303FormValidator.class);
-
-	private Class<?>[] groups;
-
-	private List<FormComponent<?>> formComponents;
-
-	/**
-	 * @param groups
-	 *            a group or a list of groups targeted for validation
-	 */
-	public JSR303FormValidator(final Class<?>... groups) {
-		this.groups = groups;
-		formComponents = new ArrayList<FormComponent<?>>();
-	}
+    /**
+     * Performs a visit to the form components and adds a BeanPropertyValidator
+     * to all of them.
+     * 
+     * @author ophelie salm (zenika)
+     * 
+     */
+    private class JSR303ValidatorFormComponentVisitor implements IVisitor {
 
 	/**
 	 * {@inheritDoc}
-	 */
-	public FormComponent<?>[] getDependentFormComponents() {
-		return formComponents.toArray(new FormComponent[formComponents.size()]);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @throws WicketRuntimeException
-	 *             if the component on which this validator is added isn't a
-	 *             Form
-	 * @throws WicketRuntimeException
-	 *             if the form model isn't a CompoundPropertyModel
 	 */
 	@SuppressWarnings("unchecked")
-	public void onAdded(Component component) {
+	public Object formComponent(IFormVisitorParticipant formComponent) {
 
-		// If the component isn't a form we throw an exception
-		if (!(component instanceof Form)) {
-			throw new WicketRuntimeException(
-					"The JSR303FormValidator must be added to a Form");
+	    if (formComponent instanceof AbstractTextComponent<?>) {
+
+		AbstractTextComponent<?> component = (AbstractTextComponent<?>) formComponent;
+
+		AbstractPropertyModel<?> model = (AbstractPropertyModel<?>) component
+			.getModel();
+
+		// We add a BeanPropertyValidator only if the model owns a
+		// chained
+		// model with a model object != null
+		if (model.getChainedModel() != null
+			&& model.getChainedModel().getObject() != null) {
+
+		    Class<?> modelObjectClass = model.getChainedModel()
+			    .getObject().getClass();
+
+		    component.add(new BeanPropertyValidator(modelObjectClass,
+			    model.getPropertyExpression(), groups));
+
+		    // This formComponent is added to the dependent form
+		    // components
+		    // list
+		    formComponents.add(component);
 		}
-
-		form = (Form<?>) component;
-
-		// If the form model isn't a compoundPropertyModel we throw an exception
-		if (!(form.getModel() instanceof CompoundPropertyModel<?>))
-			throw new WicketRuntimeException(
-					"The form model must be a valid CompoundPropertyModel");
-
-		log
-				.debug("The JSR303FormValidator is being added to the form with path : "
-						+ form.getPath());
-
-		// We visit all of the form's components
-		form.visitFormComponents(new JSR303ValidatorFormComponentVisitor());
-
+	    }
+	    return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void validate(final Form<?> form) {
-		// empty
-		// TODO class level validation
+    }
+
+    private Form<?> form;
+
+    private static final long serialVersionUID = 1L;
+
+    private transient final Logger log = LoggerFactory
+	    .getLogger(JSR303FormValidator.class);
+
+    private Class<?>[] groups;
+
+    private List<FormComponent<?>> formComponents;
+
+    /**
+     * @param groups
+     *            a group or a list of groups targeted for validation
+     */
+    public JSR303FormValidator(final Class<?>... groups) {
+	this.groups = groups;
+	formComponents = new ArrayList<FormComponent<?>>();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public FormComponent<?>[] getDependentFormComponents() {
+	return formComponents.toArray(new FormComponent[formComponents.size()]);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws WicketRuntimeException
+     *             if the component on which this validator is added isn't a
+     *             Form
+     * @throws WicketRuntimeException
+     *             if the form model isn't a CompoundPropertyModel
+     */
+    @SuppressWarnings("unchecked")
+    public void onAdded(Component component) {
+
+	// If the component isn't a form we throw an exception
+	if (!(component instanceof Form)) {
+	    throw new WicketRuntimeException(
+		    "The JSR303FormValidator must be added to a Form");
 	}
+
+	form = (Form<?>) component;
+
+	// If the form model isn't a compoundPropertyModel we throw an exception
+	if (!(form.getModel() instanceof CompoundPropertyModel<?>))
+	    throw new WicketRuntimeException(
+		    "The form model must be a valid CompoundPropertyModel");
+
+	log.debug("The JSR303FormValidator is being added to the form with path : "
+		+ form.getPath());
+
+	// We visit all of the form's components
+	form.visitFormComponents(new JSR303ValidatorFormComponentVisitor());
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void validate(final Form<?> form) {
+	// empty
+	// TODO class level validation
+    }
 }

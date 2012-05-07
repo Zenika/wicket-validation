@@ -30,13 +30,12 @@ import com.zenika.wicket.contrib.test.bean.BeanObject;
  */
 public class ValidationListenerTestPage extends WebPage {
 
+	private static final long serialVersionUID = 1L;
+
 	private BeanObject beanObject;
 
 	private Form<BeanObject> testForm;
 
-	/**
-     * 
-     */
 	public ValidationListenerTestPage() {
 		beanObject = new BeanObject();
 
@@ -45,7 +44,8 @@ public class ValidationListenerTestPage extends WebPage {
 
 	public void addFormWithModel() {
 		testForm = new Form<BeanObject>("testForm",
-				new CompoundPropertyModel<BeanObject>(beanObject));
+				new CompoundPropertyModel<BeanObject>(
+						beanObject));
 
 		TextField<String> stringField = new TextField<String>("string");
 
@@ -53,8 +53,10 @@ public class ValidationListenerTestPage extends WebPage {
 				"stringNotNull");
 		TextField<Date> dateField = new TextField<Date>("dateNotNull");
 		TextField<Date> datePastField = new TextField<Date>("datePast");
-		TextField<Date> dateFutureField = new TextField<Date>("dateFuture");
-		TextField<String> objField = new TextField<String>("object.field");
+		TextField<Date> dateFutureField = new TextField<Date>(
+				"dateFuture");
+		TextField<String> objField = new TextField<String>(
+				"object.field");
 
 		testForm.add(datePastField);
 		testForm.add(dateFutureField);

@@ -56,8 +56,8 @@ public class BeanPropertyValidatorTestPage extends WebPage {
 		objField.add(new BeanPropertyValidator<String>(BeanObject.class,
 				"object.field"));
 
-		TextField<Object> noValidationField = new TextField<Object>(
-				"noValidation");
+		TextField<String> noValidationField = new TextField<String>(
+				"noValidation", String.class);
 
 		testForm.add(datePastField);
 		testForm.add(dateFutureField);

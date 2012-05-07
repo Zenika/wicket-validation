@@ -47,7 +47,7 @@ public class ValidationListenerTest extends TestCase {
     protected void setUp() throws Exception {
 	Locale.setDefault(Locale.ENGLISH);
 	tester = new WicketTester();
-	tester.getApplication().addPostComponentOnBeforeRenderListener(
+	tester.getApplication().getComponentPostOnBeforeRenderListeners().add(
 		new JSR303ValidationListener());
 	super.setUp();
     }

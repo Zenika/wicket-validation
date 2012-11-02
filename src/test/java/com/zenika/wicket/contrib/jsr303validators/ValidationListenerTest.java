@@ -120,7 +120,7 @@ public class ValidationListenerTest extends TestCase {
 	formTester.setValue("string", "");
 	formTester.setValue("stringNotNull", "string is not null");
 	formTester.setValue("dateNotNull", "23/06/10");
-	formTester.setValue("dateFuture", "10/10/12");
+	formTester.setValue("dateFuture", "10/10/2050");
 	formTester.setValue("datePast", "10/05/86");
 	formTester.setValue("object.field", "75015");
 	formTester.submit();

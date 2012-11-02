@@ -54,7 +54,7 @@ public class BeanPropertyValidatorTest extends TestCase {
 	formTester.setValue("string", "string");
 	formTester.setValue("stringNotNull", "the string is not null");
 	formTester.setValue("dateNotNull", "23/12/10");
-	formTester.setValue("dateFuture", "10/10/20");
+	formTester.setValue("dateFuture", "10/10/2050");
 	formTester.setValue("datePast", "10/10/86");
 	formTester.setValue("object.field", "75015");
 	formTester.setValue("noValidation", "something");

@@ -124,7 +124,7 @@ public class JSR303FormValidatorTest extends TestCase {
 	formTester.setValue("string", "");
 	formTester.setValue("stringNotNull", "string is not null");
 	formTester.setValue("dateNotNull", "23/06/10");
-	formTester.setValue("dateFuture", "10/10/12");
+	formTester.setValue("dateFuture", "10/10/2050");
 	formTester.setValue("datePast", "10/05/86");
 	formTester.setValue("object.field", "75015");
 	formTester.submit();
@@ -154,7 +154,7 @@ public class JSR303FormValidatorTest extends TestCase {
 	formTester.setValue("string", ""); // no validation
 	formTester.setValue("stringNotNull", "string is not null");
 	formTester.setValue("dateNotNull", "23/06/10"); // may not be null
-	formTester.setValue("dateFuture", "10/10/12"); // must be in the future
+	formTester.setValue("dateFuture", "10/10/2050"); // must be in the future
 	formTester.setValue("datePast", "10/05/86"); // must be in the past
 	formTester.submit();
 

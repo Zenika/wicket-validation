@@ -10,7 +10,7 @@
     <groupId>com.zenika.wicket.contrib</groupId>
     <artifactId>wicket-jsr303-validators</artifactId>
     <packaging>jar</packaging>
-    <version>6.6.0</version>
+    <version>6.6.1-SNAPSHOT</version>
     <name>Wicket Validation</name>
     <description>
         This project aims at integrating the JSR303 Bean Validation
